@@ -1,6 +1,6 @@
 package com.example.appmudanza.ui.theme.screens
 
-import android.widget.Space
+import android.graphics.Outline
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,32 +23,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import org.w3c.dom.Text
 
 @Composable
 
-fun LoginScreen (
-    onLogin: () -> Unit,
-    onGoToRegister: () -> Unit,
-) {
+fun RegisterScreen (
+    onRegister: () -> Unit,
+    onBackToLogin: () -> Unit,
+){
     var email by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable {mutableStateOf("") }
-
-    val isValid = email.isNotBlank() && password.length >= 4 //QUEREMOS VALIDA QUE EL EMAIL NO ESTE VACIO Y QUE LA CONTRASEÑA SEA MAYOR A 4 DIGITOS. ESO NOS DEJARÁ PULSAR EL BOTON DE LOGIN
+    var password by rememberSaveable {mutableStateOf("")}
+    var repitePassword by rememberSaveable {mutableStateOf("")}
+    val isvalid = email.isNotBlank() && password.length >= 4
+    val passwordOk = password.isNotEmpty() && password == repitePassword
 
     Surface(Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize().padding(25.dp),
-            verticalArrangement = Arrangement.Center, //colocarlo en el centro
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("LOGIN", style = MaterialTheme.typography.headlineSmall)
+            Text("REGISTRO", style = MaterialTheme.typography.headlineSmall)
 
             Spacer(Modifier.height(16.dp))
 
             OutlinedTextField(
                 value = email,
                 onValueChange = {email = it},
-                label = {Text("Email")},
+                label = { Text ("Email")},
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -60,22 +62,35 @@ fun LoginScreen (
                 onValueChange = {password = it},
                 label = {Text("Contraseña")},
                 visualTransformation = PasswordVisualTransformation(),
-                singleLine =  true,
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = repitePassword,
+                onValueChange = {repitePassword = it},
+                label = {Text("Repite la contraseña")},
+                visualTransformation = PasswordVisualTransformation(),
+                singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(Modifier.height(16.dp))
             Button(
-                onClick = onLogin,
-                enabled = isValid,
+                onClick = onRegister,
+                enabled = passwordOk
             ) {
-                Text("Entrar")
+                Text("Registrarse")
             }
             TextButton(
-                onClick = onGoToRegister
+                onClick = onBackToLogin
             ) {
-                Text("¿No tienes cuenta? Registrate con nosotros")
+                Text("¿Ya tienes cuenta? Inicia sesión")
             }
         }
     }
+
+
 }
