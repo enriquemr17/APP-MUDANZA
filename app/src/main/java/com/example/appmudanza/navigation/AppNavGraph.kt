@@ -83,6 +83,7 @@ composable (Route.Login.Path) {
 
         )
     }
+    composable (Route.Mudanza.Path) {}
 }
 
 }
