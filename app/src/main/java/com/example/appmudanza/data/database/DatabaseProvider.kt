@@ -16,7 +16,7 @@ object DatabaseProvider {
                 AppDatabase::class.java,
                 "app_mudanza"
             )
-                .fallbackToDestructiveMigration(true)
+                .fallbackToDestructiveMigration(true) //para apagar e recriar o banco ao mudar de versão. Isso evita erro de migração enquanto desenvolvendo
                 .build()
             Log.d("DB", "Banco construído")
             INSTANCE = instance

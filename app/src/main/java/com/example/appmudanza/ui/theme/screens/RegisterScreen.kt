@@ -8,12 +8,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
+import com.example.appmudanza.viewmodel.RegisterState
+import com.example.appmudanza.viewmodel.RegisterViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(
     onRegister: () -> Unit,
-    onBackToLogin: () -> Unit
+    onBackToLogin: () -> Unit,
+    viewModel: RegisterViewModel = viewModel()
 ) {
+    val registerState by viewModel.registerState.collectAsState() // Mude para registerState e collectAsState()
+    val coroutineScope = rememberCoroutineScope()
     var name by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -56,18 +66,47 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            // Error handling
+            if (registerState is RegisterState.Error) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = (registerState as RegisterState.Error).message,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
 
+            Spacer(modifier = Modifier.height(24.dp))
             Button(
-                onClick = onRegister,
+                onClick = {
+                    coroutineScope.launch {
+                        viewModel.register(name, email, password)
+                    }
+                },
+                enabled = name.isNotBlank() && email.isNotBlank() && password.isNotBlank() &&
+                        registerState !is RegisterState.Loading,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Criar Conta")
+                Text(if (registerState is RegisterState.Loading) "Cadastrando..." else "Criar Conta")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TextButton(
+                onClick = onBackToLogin,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "¿Ya tienes cuenta? Inicia sesión",
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
 
-            TextButton(onClick = onBackToLogin) {
-                Text("Já tem uma conta? Faça Login")
-            }
+        }
+    }
+
+    // Observa mudanças de estado para navegação
+    LaunchedEffect(registerState) {
+        if (registerState is RegisterState.Success) {
+            onRegister()
         }
     }
 }
