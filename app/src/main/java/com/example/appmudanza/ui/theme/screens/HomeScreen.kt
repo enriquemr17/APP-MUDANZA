@@ -1,70 +1,77 @@
 package com.example.appmudanza.ui.theme.screens
 
-import android.widget.Space
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.appmudanza.navigation.Route
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
-fun HomeScreen (
+fun HomeScreen(
+    navController: NavController,
     onGoToMudanza: () -> Unit,
+    onGoToVehicleRegistration: () -> Unit,
     onGoToAlquiler: () -> Unit,
     onGoToIncidencias: () -> Unit,
-    onGoToSettings: () -> Unit,
-){
-    Surface(Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(25.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "INICIO")
-            Spacer(modifier = Modifier.height(32.dp))
+    onGoToSettings: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Home") })
+        }
+    ) { padding ->
 
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+
+            Text(
+                text = "Bienvenido a AppMudanza",
+                style = MaterialTheme.typography.titleLarge
+            )
+
+            // Botão para registrar veículos
+            Button(
+                onClick = onGoToVehicleRegistration,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Registrar Vehículo")
+            }
+
+            // Botão para gestão de mudanzas
             Button(
                 onClick = onGoToMudanza,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("ALQUILER DE CONDCUTOR + VEHICULO DE MUDANZA")
+                Text("Gestión de Mudanza")
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
+            // Botões adicionais (Alquiler, Incidencias, Settings)
             Button(
                 onClick = onGoToAlquiler,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("ALQUILA TU VEHICULO SIN CONDUCTOR")
+                Text("Alquiler")
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = onGoToIncidencias,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("TUS INCIDENCIAS")
+                Text("Incidencias")
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = onGoToSettings,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("AJUSTES")
+                Text("Ajustes")
             }
         }
     }
