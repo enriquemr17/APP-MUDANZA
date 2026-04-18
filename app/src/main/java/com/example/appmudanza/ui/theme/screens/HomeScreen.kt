@@ -20,7 +20,7 @@ fun HomeScreen(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Home") })
+            TopAppBar(title = { Text("INICIO") })
         }
     ) { padding ->
 
@@ -36,7 +36,7 @@ fun HomeScreen(
                 style = MaterialTheme.typography.titleLarge
             )
 
-            // Botão para registrar veículos
+            // Botón para registrar vehículos
             Button(
                 onClick = onGoToVehicleRegistration,
                 modifier = Modifier.fillMaxWidth()
@@ -44,7 +44,7 @@ fun HomeScreen(
                 Text("Registrar Vehículo")
             }
 
-            // Botão para gestão de mudanzas
+            // Botón para gestión de mudanzas
             Button(
                 onClick = onGoToMudanza,
                 modifier = Modifier.fillMaxWidth()
@@ -52,12 +52,12 @@ fun HomeScreen(
                 Text("Gestión de Mudanza")
             }
 
-            // Botões adicionais (Alquiler, Incidencias, Settings)
+            // Botones adicionales (Alquiler, Incidencias, Settings)
             Button(
                 onClick = onGoToAlquiler,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Alquiler")
+                Text("Alquiler de vehículos sin conductor")
             }
 
             Button(

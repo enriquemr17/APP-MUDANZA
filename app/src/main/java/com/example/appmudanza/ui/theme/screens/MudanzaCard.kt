@@ -70,6 +70,6 @@ fun MudanzaCard(
 }
 
 @Composable
-fun RatingStars(x0: Float) {
+fun RatingStarscard(x0: Float) {
     TODO("Not yet implemented")
 }

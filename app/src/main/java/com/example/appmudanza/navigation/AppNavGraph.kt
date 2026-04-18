@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appmudanza.model.listaConductores
 import com.example.appmudanza.ui.theme.screens.AlquilerScreen
 import com.example.appmudanza.ui.theme.screens.HomeScreen
 import com.example.appmudanza.ui.theme.screens.LoginScreen
@@ -92,10 +93,11 @@ fun AppNavGraph(
 
         composable(Route.Mudanza.path) {
             MudanzaScreen(
+                conductores = listaConductores,
                 onBack = {
                     navController.popBackStack()
-                }
-            )
+                },
+                )
         }
 
         composable(Route.Alquiler.path) {
@@ -107,11 +109,11 @@ fun AppNavGraph(
         }
 
         composable(Route.Incidencias.path) {
-            Text("INCIDENCIAS SCREEN")
+            Text("INCIDENCIAS SCREEN") //sobra (BORRAR)
         }
 
         composable(Route.Settings.path) {
-            Text("AJUSTES SCREEN")
+            Text("AJUSTES SCREEN") // sobra (BORRAR)
         }
     }
 }

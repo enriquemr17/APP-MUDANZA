@@ -22,11 +22,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 if (user != null && user.password == password) {
                     uiState.value = uiState.value.copy(isLoggedIn = true, isLoading = false)
                 } else {
-                    uiState.value = uiState.value.copy(error = "Email ou senha incorretos", isLoading = false)
+                    uiState.value = uiState.value.copy(error = "Email o contraseña incorrectos", isLoading = false)
                 }
             } catch (e: Exception) {
-                Log.e("LoginViewModel", "Erro ao fazer login", e)
-                uiState.value = uiState.value.copy(error = "Erro técnico: ${e.message}", isLoading = false)
+                Log.e("LoginViewModel", "Error al logear", e)
+                uiState.value = uiState.value.copy(error = "Error técnico: ${e.message}", isLoading = false)
             }
         }
     }

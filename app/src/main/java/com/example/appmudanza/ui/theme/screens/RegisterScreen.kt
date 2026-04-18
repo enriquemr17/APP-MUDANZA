@@ -43,7 +43,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Nome Completo") },
+                label = { Text("Nombre completo") },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -61,7 +61,7 @@ fun RegisterScreen(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Senha") },
+                label = { Text("Contraseña") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -86,7 +86,7 @@ fun RegisterScreen(
                         registerState !is RegisterState.Loading,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(if (registerState is RegisterState.Loading) "Cadastrando..." else "Criar Conta")
+                Text(if (registerState is RegisterState.Loading) "Creando..." else "Crear cuenta")
             }
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -103,7 +103,7 @@ fun RegisterScreen(
         }
     }
 
-    // Observa mudanças de estado para navegação
+    // Observa mudanzas de estado para navegacion
     LaunchedEffect(registerState) {
         if (registerState is RegisterState.Success) {
             onRegister()
