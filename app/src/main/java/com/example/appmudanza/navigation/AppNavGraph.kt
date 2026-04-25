@@ -1,89 +1,119 @@
 package com.example.appmudanza.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appmudanza.model.listaConductores
+import com.example.appmudanza.ui.theme.screens.AlquilerScreen
 import com.example.appmudanza.ui.theme.screens.HomeScreen
 import com.example.appmudanza.ui.theme.screens.LoginScreen
+import com.example.appmudanza.ui.theme.screens.MudanzaScreen
 import com.example.appmudanza.ui.theme.screens.RegisterScreen
+import com.example.appmudanza.ui.theme.screens.VehicleRegistrationScreen
 
-//SEALED CLASS: define las rutas de la APP de forma tipada
-
-sealed class Route (val Path: String) {
-
-    //cada objeto representa una pantalla con su "path" o ruta única.
-
-        data object Login : Route ("login")
-        data object Register : Route ("register")
-        data object Home : Route ("home")
-        data object Mudanza : Route ("conductor para mudanza")
-        data object Alquiler : Route ("alquiler sin conductor")
-        data object Incidencias : Route ("indidencias")
-        data object Settings  : Route ("ajustes")
-
+// SEALED CLASS: rutas tipadas
+sealed class Route(val path: String) {
+    object Login : Route("login")
+    object Register : Route("register")
+    object Home : Route("home")
+    object Mudanza : Route("mudanza")
+    object VehicleRegistration : Route("vehicle_registration")
+    object Alquiler : Route("alquiler")
+    object Incidencias : Route("incidencias")
+    object Settings : Route("settings")
 }
 
 @Composable
-fun AppNavGraph (
-    navController: NavHostController = rememberNavController ()
+fun AppNavGraph(
+    navController: NavHostController = rememberNavController()
 ) {
-NavHost (
-    navController = navController,
-    startDestination = Route.Login.Path // hacemos que LOGIN sea lo primero que veamos
-) {
-composable (Route.Login.Path) {
-    //ahora mostramos los botones que queremos que aparezcan y sus acciones
-    LoginScreen (
-        onLogin = {
-            //simulacion de login OK
-            // Navegacion a pantalla HOME
-            navController.navigate(Route.Home.Path) {
-                popUpTo(Route.Login.Path) { inclusive = true} //evitamos que la pagina pete al ir hacia atras.
-            }
-        },
-        onGoToRegister = {
-            //Navegacion a pantalla REGISTER
-            navController.navigate(Route.Register.Path)
-        }
-    )
-}
-    composable (Route.Register.Path){
-        RegisterScreen (
-            onRegister = {
-                navController.navigate(Route.Home.Path){
-                    popUpTo(Route.Login.Path) {inclusive = true} //evita que pete al ir hacia atrás
-                }
-            },
 
-            onBackToLogin = {
-                navController.navigate(Route.Login.Path){
+    NavHost(
+        navController = navController,
+        startDestination = Route.Login.path
+    ) {
+
+        composable(Route.Login.path) {
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(Route.Home.path) {
+                        popUpTo(Route.Login.path) { inclusive = true }
+                    }
+                },
+                onGoToRegister = {
+                    navController.navigate(Route.Register.path)
+                }
+            )
+        }
+
+        composable(Route.Register.path) {
+            RegisterScreen(
+                onRegister = {
+                    navController.navigate(Route.Home.path) {
+                        popUpTo(Route.Login.path) { inclusive = true }
+                    }
+                },
+                onBackToLogin = {
                     navController.popBackStack()
                 }
-            }
-        )
-    }
-    composable (Route.Home.Path){
-            HomeScreen (
+            )
+        }
+
+        composable(Route.Home.path) {
+            HomeScreen(
+                navController = navController,
                 onGoToMudanza = {
-                navController.navigate(Route.Mudanza.Path){}
+                    navController.navigate(Route.Mudanza.path)
                 },
-            onGoToAlquiler = {
-                navController.navigate(Route.Alquiler.Path){}
-            },
+                onGoToVehicleRegistration = {
+                    navController.navigate(Route.VehicleRegistration.path)
+                },
+                onGoToAlquiler = {
+                    navController.navigate(Route.Alquiler.path)
+                },
+                onGoToIncidencias = {
+                    navController.navigate(Route.Incidencias.path)
+                },
+                onGoToSettings = {
+                    navController.navigate(Route.Settings.path)
+                }
+            )
+        }
 
-            onGoToIncidencias = {
-                navController.navigate(Route.Incidencias.Path){}
-            },
+        composable(Route.VehicleRegistration.path) {
+            VehicleRegistrationScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
 
-            onGoToSettings = {
-                navController.navigate(Route.Settings.Path){}
-            }
+        composable(Route.Mudanza.path) {
+            MudanzaScreen(
+                conductores = listaConductores,
+                onBack = {
+                    navController.popBackStack()
+                },
+                )
+        }
 
-        )
+        composable(Route.Alquiler.path) {
+            AlquilerScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(Route.Incidencias.path) {
+            Text("INCIDENCIAS SCREEN") //sobra (BORRAR)
+        }
+
+        composable(Route.Settings.path) {
+            Text("AJUSTES SCREEN") // sobra (BORRAR)
+        }
     }
-    composable (Route.Mudanza.Path) {}
-}
-
 }

@@ -1,8 +1,6 @@
 package com.example.appmudanza.ui.theme.screens
 
-import android.R
 import android.R.attr.padding
-import android.media.Rating
 import androidx.compose.foundation.Image
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Star
@@ -22,6 +20,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -78,17 +77,18 @@ fun RatingStars (rating: Float) {
     }
 }
 
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun MudanzaScreen (
     conductores: List <Conductores>,
-    navController: NavHostController,
-    onback: () -> Unit
+    onBack: () -> Unit
 ){
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {Text("ALQUILER DE CONDUCTOR")},
                 navigationIcon = {
-                    IconButton(onClick = onback) {
+                    IconButton(onClick = onBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = null)
                     }
                 }
@@ -102,7 +102,7 @@ fun MudanzaScreen (
                     description = conductor.description,
                     imagesRes = conductor.imagesRes,
                     valoration = conductor.valoration,
-                    onClick =
+                    onClick = onBack,
                 )
             }
         }
