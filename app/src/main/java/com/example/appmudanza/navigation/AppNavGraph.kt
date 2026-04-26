@@ -13,6 +13,8 @@ import com.example.appmudanza.ui.theme.screens.LoginScreen
 import com.example.appmudanza.ui.theme.screens.MudanzaScreen
 import com.example.appmudanza.ui.theme.screens.RegisterScreen
 import com.example.appmudanza.ui.theme.screens.VehicleRegistrationScreen
+import com.example.appmudanza.ui.theme.screens.IncidenciasScreen
+import com.example.appmudanza.ui.theme.screens.DetalleIncidenciaScreen
 
 // SEALED CLASS: rutas tipadas
 sealed class Route(val path: String) {
@@ -97,23 +99,33 @@ fun AppNavGraph(
                 onBack = {
                     navController.popBackStack()
                 },
-                )
+            )
         }
 
-        composable(Route.Alquiler.path) {
-            AlquilerScreen(
+        composable(Route.Incidencias.path) {
+            IncidenciasScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onMudanzaClick = { mudanza ->
+                    navController.navigate("detalle_incidencia/${mudanza.titulo}")
+                }
+            )
+        }
+
+        composable("detalle_incidencia/{titulo}") { backStackEntry ->
+            val titulo = backStackEntry.arguments?.getString("titulo") ?: "Detalle incidencia"
+
+            DetalleIncidenciaScreen(
+                titulo = titulo,
                 onBack = {
                     navController.popBackStack()
                 }
             )
         }
 
-        composable(Route.Incidencias.path) {
-            Text("INCIDENCIAS SCREEN") //sobra (BORRAR)
-        }
-
         composable(Route.Settings.path) {
-            Text("AJUSTES SCREEN") // sobra (BORRAR)
+            Text("AJUSTES SCREEN")
         }
     }
 }
