@@ -16,7 +16,8 @@ fun HomeScreen(
     onGoToVehicleRegistration: () -> Unit,
     onGoToAlquiler: () -> Unit,
     onGoToIncidencias: () -> Unit,
-    onGoToSettings: () -> Unit
+    onGoToSettings: () -> Unit,
+
 ) {
     Scaffold(
         topBar = {

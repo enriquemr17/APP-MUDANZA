@@ -8,13 +8,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appmudanza.model.listaConductores
 import com.example.appmudanza.ui.theme.screens.AlquilerScreen
+import com.example.appmudanza.ui.theme.screens.DetalleIncidenciaScreen
 import com.example.appmudanza.ui.theme.screens.HomeScreen
+import com.example.appmudanza.ui.theme.screens.IncidenciasScreen
 import com.example.appmudanza.ui.theme.screens.LoginScreen
 import com.example.appmudanza.ui.theme.screens.MudanzaScreen
 import com.example.appmudanza.ui.theme.screens.RegisterScreen
 import com.example.appmudanza.ui.theme.screens.VehicleRegistrationScreen
-import com.example.appmudanza.ui.theme.screens.IncidenciasScreen
-import com.example.appmudanza.ui.theme.screens.DetalleIncidenciaScreen
+import com.example.appmudanza.ui.theme.screens.conductorDetalladoScreen
 
 // SEALED CLASS: rutas tipadas
 sealed class Route(val path: String) {
@@ -98,10 +99,29 @@ fun AppNavGraph(
                 conductores = listaConductores,
                 onBack = {
                     navController.popBackStack()
-                },
+                }, onConductorClick = { index ->
+                    navController.navigate("conductorDetallado/$index") // ✅ así reemplaza el valor
+                }
+                )
+        }
+
+        composable("conductorDetallado/{index}") { backStackEntry ->
+            val index = backStackEntry.arguments?.getString("index")?.toInt() ?: 0
+            val conductor = listaConductores[index]
+
+            conductorDetalladoScreen(
+                conductor = conductor,
+                onBack = { navController.popBackStack() }
             )
         }
 
+        composable(Route.Alquiler.path) {
+            AlquilerScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
         composable(Route.Incidencias.path) {
             IncidenciasScreen(
                 onBack = {
@@ -125,7 +145,7 @@ fun AppNavGraph(
         }
 
         composable(Route.Settings.path) {
-            Text("AJUSTES SCREEN")
+            Text("AJUSTES SCREEN") // sobra (BORRAR)
         }
     }
 }

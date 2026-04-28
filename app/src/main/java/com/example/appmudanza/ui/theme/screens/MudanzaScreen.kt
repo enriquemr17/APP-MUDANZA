@@ -81,7 +81,8 @@ fun RatingStars (rating: Float) {
 @OptIn(ExperimentalMaterial3Api::class)
 fun MudanzaScreen (
     conductores: List <Conductores>,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onConductorClick: (Int) -> Unit,
 ){
     Scaffold(
         topBar = {
@@ -102,7 +103,8 @@ fun MudanzaScreen (
                     description = conductor.description,
                     imagesRes = conductor.imagesRes,
                     valoration = conductor.valoration,
-                    onClick = onBack,
+                    onClick = {onConductorClick(index)},
+
                 )
             }
         }
