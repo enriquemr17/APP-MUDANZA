@@ -15,6 +15,7 @@ import com.example.appmudanza.ui.theme.screens.RegisterScreen
 import com.example.appmudanza.ui.theme.screens.VehicleRegistrationScreen
 import com.example.appmudanza.ui.theme.screens.IncidenciasScreen
 import com.example.appmudanza.ui.theme.screens.DetalleIncidenciaScreen
+import com.example.appmudanza.ui.theme.screens.SettingsScreen
 
 // SEALED CLASS: rutas tipadas
 sealed class Route(val path: String) {
@@ -125,7 +126,11 @@ fun AppNavGraph(
         }
 
         composable(Route.Settings.path) {
-            Text("AJUSTES SCREEN")
+            SettingsScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

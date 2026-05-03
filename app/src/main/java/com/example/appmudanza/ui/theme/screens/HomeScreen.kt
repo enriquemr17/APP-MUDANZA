@@ -1,12 +1,16 @@
 package com.example.appmudanza.ui.theme.screens
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+
 import com.example.appmudanza.navigation.Route
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,7 +24,17 @@ fun HomeScreen(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("INICIO") })
+            TopAppBar(
+                title = { Text("INICIO") },
+                actions = {
+                    IconButton(onClick = onGoToSettings) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Ajustes"
+                        )
+                    }
+                }
+            )
         }
     ) { padding ->
 
@@ -65,13 +79,6 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Incidencias")
-            }
-
-            Button(
-                onClick = onGoToSettings,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Ajustes")
             }
         }
     }
