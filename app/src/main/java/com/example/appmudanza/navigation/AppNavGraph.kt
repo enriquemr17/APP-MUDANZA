@@ -2,6 +2,9 @@ package com.example.appmudanza.navigation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +18,9 @@ import com.example.appmudanza.ui.theme.screens.LoginScreen
 import com.example.appmudanza.ui.theme.screens.MudanzaScreen
 import com.example.appmudanza.ui.theme.screens.RegisterScreen
 import com.example.appmudanza.ui.theme.screens.VehicleRegistrationScreen
-import com.example.appmudanza.ui.theme.screens.conductorDetalladoScreen
+import com.example.appmudanza.ui.theme.screens.ConductorDetalladoScreen
+import com.example.appmudanza.viewmodel.VehicleViewModel
+
 
 // SEALED CLASS: rutas tipadas
 sealed class Route(val path: String) {
@@ -96,7 +101,6 @@ fun AppNavGraph(
 
         composable(Route.Mudanza.path) {
             MudanzaScreen(
-                conductores = listaConductores,
                 onBack = {
                     navController.popBackStack()
                 }, onConductorClick = { index ->
@@ -107,12 +111,17 @@ fun AppNavGraph(
 
         composable("conductorDetallado/{index}") { backStackEntry ->
             val index = backStackEntry.arguments?.getString("index")?.toInt() ?: 0
-            val conductor = listaConductores[index]
+            val vehicleViewModel: VehicleViewModel = viewModel()
+            val vehicles by vehicleViewModel.vehicles.collectAsState()
+            val conductores = vehicles.filter {it.withDriver}
 
-            conductorDetalladoScreen(
-                conductor = conductor,
-                onBack = { navController.popBackStack() }
-            )
+            if (conductores.isNotEmpty() && index <conductores.size) {
+                ConductorDetalladoScreen(
+                    vehicle = conductores[index],
+                    onBack = {navController.popBackStack()}
+                )
+            }
+
         }
 
         composable(Route.Alquiler.path) {

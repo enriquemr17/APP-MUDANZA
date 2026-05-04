@@ -12,6 +12,8 @@ data class Vehicle(
     val capacity: Int,
     val driver: String = "",
     val licenseType: String = "",
-    val withDriver: Boolean = false
+    val withDriver: Boolean = false,
+    val description: String = "",
+    val valoration: Float = 0f
 )
 

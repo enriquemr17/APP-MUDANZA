@@ -1,6 +1,7 @@
 package com.example.appmudanza.viewmodel
 
 import android.app.Application
+import android.provider.Telephony
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.appmudanza.data.database.DatabaseProvider
@@ -28,11 +29,15 @@ class VehicleViewModel(application: Application) : AndroidViewModel(application)
         capacity: Int,
         driver: String = "",
         licenseType: String = "",
-        withDriver: Boolean = false
+        withDriver: Boolean = false,
+        description: String = "",
+        valoration: Float = 0f
+
+
     ) {
         viewModelScope.launch {
             dao.insert(
-                Vehicle(plate = plate, type = type, capacity = capacity, driver = driver, licenseType = licenseType, withDriver = withDriver)
+                Vehicle(plate = plate, type = type, capacity = capacity, driver = driver, licenseType = licenseType, withDriver = withDriver, description = description, valoration = valoration)
             )
         }
     }

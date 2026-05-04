@@ -18,8 +18,8 @@ Conductores (
 val listaConductores = listOf(
     Conductores(
         id =  "1",
-        title = "Conductor 1",
-        description = "descripcion por defecto",
+        title = "Ramón González",
+        description = "hola",
         imagesRes = R.drawable.ic_launcher_foreground,
         valoration  = 4.5f
     ),

@@ -1,5 +1,6 @@
 package com.example.appmudanza.ui.theme.screens
 
+import android.graphics.Outline
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,12 +25,16 @@ fun VehicleRegistrationScreen(
     var selectedTab by remember { mutableStateOf(0) }
     val tabTitles = listOf("Con Condutor", "Sin Condutor")
 
-    // Campos para condutor)
+    // Campos para condutor
     var plate by remember { mutableStateOf("") }
     var type by remember { mutableStateOf("") }
     var capacity by remember { mutableStateOf("") }
     var driver by remember { mutableStateOf("") }
     var licenseType by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    var valoration by remember { mutableStateOf("") }
+
+
 
     // Campos para sin condutor
     var plateNoDriver by remember { mutableStateOf("") }
@@ -76,11 +81,14 @@ fun VehicleRegistrationScreen(
                         item {
                             Text("Nuevo vehículo con conductor", style = MaterialTheme.typography.titleMedium)
 
+                            OutlinedTextField(value = driver, onValueChange = { driver = it }, label = { Text("Conductor") })
+                            OutlinedTextField(value = description, onValueChange = {description = it}, label = {Text("Descripción")})
                             OutlinedTextField(value = plate, onValueChange = { plate = it }, label = { Text("Matrícula") })
                             OutlinedTextField(value = type, onValueChange = { type = it }, label = { Text("Tipo") })
                             OutlinedTextField(value = capacity, onValueChange = { capacity = it }, label = { Text("Capacidad") })
-                            OutlinedTextField(value = driver, onValueChange = { driver = it }, label = { Text("Conductor") })
                             OutlinedTextField(value = licenseType, onValueChange = { licenseType = it }, label = { Text("Tipo de Carnet") })
+                            OutlinedTextField(value = valoration, onValueChange = {valoration = it}, label = {Text("Valoración (0-5)")})
+                            Text ("Valor actual: $valoration")
 
                             Spacer(Modifier.height(12.dp))
 
@@ -91,9 +99,11 @@ fun VehicleRegistrationScreen(
                                     capacity.toIntOrNull() ?: 0,
                                     driver,
                                     licenseType = licenseType,
-                                    withDriver = true
+                                    withDriver = true,
+                                    description,
+                                    valoration = valoration.toFloatOrNull() ?: 0f,
                                 )
-                                plate = ""; type = ""; capacity = ""; driver = ""; licenseType = ""
+                                plate = ""; type = ""; capacity = ""; driver = ""; licenseType = ""; description = ""; valoration = ""
                             }) {
                                 Text("Guardar vehículo con Conductor")
                             }
@@ -110,6 +120,7 @@ fun VehicleRegistrationScreen(
                                     Text("Capacidad: ${vehicle.capacity}")
                                     Text("Conductor: ${vehicle.driver}")
                                     Text("Carnet: ${vehicle.licenseType}")
+                                    Text("Valoracion: ${vehicle.valoration}")
                                 }
                             }
                         }
@@ -142,7 +153,7 @@ fun VehicleRegistrationScreen(
                                     capacityNoDriver.toIntOrNull() ?: 0,
                                     driver = "",
                                     licenseType = "",
-                                    withDriver = false
+                                    withDriver = false,
                                 )
                                 plateNoDriver = ""; typeNoDriver = ""; capacityNoDriver = ""
                             }) {

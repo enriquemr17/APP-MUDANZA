@@ -21,18 +21,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.appmudanza.model.Conductores
+import com.example.appmudanza.R
+import com.example.appmudanza.data.entity.Vehicle
+
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun conductorDetalladoScreen(
-    conductor: Conductores,
-    onBack: () -> Unit
+fun ConductorDetalladoScreen(
+    vehicle : Vehicle,
+    onBack: () -> Unit,
+
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(conductor.title) },
+                title = { Text("Conductor") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
@@ -48,28 +51,34 @@ fun conductorDetalladoScreen(
                 .padding(16.dp)
         ) {
             Image(
-                painter = painterResource(id = conductor.imagesRes),
-                contentDescription = conductor.title,
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                contentDescription = vehicle.type,
                 modifier = Modifier.fillMaxWidth().size(200.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = conductor.title,
+                text = vehicle.driver,
                 style = MaterialTheme.typography.headlineMedium
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = conductor.description,
+                text =vehicle.type,
                 style = MaterialTheme.typography.bodyLarge
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            RatingStars(rating = conductor.valoration)
+            Text (
+                text = vehicle.description,
+                style = MaterialTheme.typography.bodyLarge
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
         }
     }
 }

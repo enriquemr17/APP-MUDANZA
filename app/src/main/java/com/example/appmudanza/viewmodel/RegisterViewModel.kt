@@ -20,7 +20,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch(Dispatchers.IO) {
             _registerState.value = RegisterState.Loading
             try {
-                // Verifica se email já existe
+                // Verifica si el email ya existe
                 val existingUser = userDao.getUserByEmail(email) // Assuma que existe este método no DAO
                 if (existingUser != null) {
                     _registerState.value = RegisterState.Error("Email já cadastrado")
