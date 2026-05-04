@@ -19,6 +19,7 @@ import com.example.appmudanza.ui.theme.screens.MudanzaScreen
 import com.example.appmudanza.ui.theme.screens.RegisterScreen
 import com.example.appmudanza.ui.theme.screens.VehicleRegistrationScreen
 import com.example.appmudanza.ui.theme.screens.ConductorDetalladoScreen
+import com.example.appmudanza.ui.theme.screens.SettingsScreen
 import com.example.appmudanza.viewmodel.VehicleViewModel
 
 
@@ -154,7 +155,11 @@ fun AppNavGraph(
         }
 
         composable(Route.Settings.path) {
-            Text("AJUSTES SCREEN") // sobra (BORRAR)
+            SettingsScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
