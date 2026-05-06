@@ -103,10 +103,8 @@ fun AppNavGraph(
             MudanzaScreen(
                 onBack = {
                     navController.popBackStack()
-                }, onConductorClick = { index ->
-                    navController.navigate("conductorDetallado/$index") // ✅ así reemplaza el valor
                 }
-                )
+            )
         }
 
 

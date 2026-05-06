@@ -17,8 +17,8 @@ import com.example.appmudanza.data.entity.Mudanza
 
 
 @Database(
-    entities = [User::class, MudanzaVehicle::class, AlquilerVehicle::class, Vehicle::class, Move::class],
-    version = 5,  // Incrementa version para nueva estructura
+    entities = [User::class, MudanzaVehicle::class, AlquilerVehicle::class, Vehicle::class, Move::class, Mudanza::class],
+    version = 6,  // Incrementar version para nuevas estructuras
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
