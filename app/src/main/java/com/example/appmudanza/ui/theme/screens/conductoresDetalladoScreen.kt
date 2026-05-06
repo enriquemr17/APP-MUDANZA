@@ -1,5 +1,6 @@
 package com.example.appmudanza.ui.theme.screens
 
+import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -32,9 +34,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appmudanza.R
 import com.example.appmudanza.data.entity.Vehicle
 import kotlinx.coroutines.launch
+import com.example.appmudanza.viewmodel.MudanzaViewModel
 
 
 @Composable
@@ -42,11 +46,15 @@ import kotlinx.coroutines.launch
 fun ConductorDetalladoScreen(
     vehicle : Vehicle,
     onBack: () -> Unit,
+    mudanzaViewModel: MudanzaViewModel = viewModel()
 
 ) {
     var showDatePicker by remember { mutableStateOf(false) }
+    var origen by remember { mutableStateOf("") }
+    var destino by remember { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope ()
+
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -96,6 +104,24 @@ fun ConductorDetalladoScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            OutlinedTextField(
+                value = origen,
+                onValueChange = {origen = it},
+                label = {Text("Origen")},
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer (modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = destino,
+                onValueChange = {destino = it},
+                label = {Text("Destino")},
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer (modifier = Modifier.height(8.dp))
+
             Button(onClick = {showDatePicker = true}) {
                 Text("Reservar cita")
             }
@@ -105,9 +131,19 @@ fun ConductorDetalladoScreen(
                 DatePickerDialog(
                     onDismissRequest = {showDatePicker = false }, // cierra el calendario
                     confirmButton = {
-                        Button(onClick = {val  selectedDate = datePickerState.selectedDateMillis
+                        Button(onClick = {val  selectedDate = datePickerState.selectedDateMillis ?: 0L
+                            mudanzaViewModel.addMudanza (
+                                origen = origen,
+                                destino = destino,
+                                fecha = selectedDate,
+                                withDriver = vehicle.withDriver,
+                                driverName = vehicle.driver
+                            )
                             scope.launch { snackbarHostState.showSnackbar("Reserva confirmada") }
-                            showDatePicker= false}) {
+                            showDatePicker= false
+                            origen = ""
+                            destino = ""
+                        }) {
                             Text("Confirmar")
                         }
 

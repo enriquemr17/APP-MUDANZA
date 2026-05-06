@@ -6,18 +6,19 @@ import com.example.appmudanza.data.entity.AlquilerVehicle
 import com.example.appmudanza.data.entity.MudanzaVehicle
 import com.example.appmudanza.data.dao.AlquilerVehicleDao
 import com.example.appmudanza.data.dao.MoveDao
+import com.example.appmudanza.data.dao.MudanzaDao
 import com.example.appmudanza.data.dao.MudanzaVehicleDao
 import com.example.appmudanza.data.dao.UserDao
 import com.example.appmudanza.data.dao.VehicleDao
 import com.example.appmudanza.data.entity.User
 import com.example.appmudanza.data.entity.Vehicle
 import com.example.appmudanza.data.entity.Move
-
+import com.example.appmudanza.data.entity.Mudanza
 
 
 @Database(
     entities = [User::class, MudanzaVehicle::class, AlquilerVehicle::class, Vehicle::class, Move::class],
-    version = 5,  // Incrementa versão para nova estrutura
+    version = 5,  // Incrementa version para nueva estructura
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -28,4 +29,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
 
     abstract fun moveDao(): MoveDao
+    abstract  fun mudanzaDao(): MudanzaDao
 }

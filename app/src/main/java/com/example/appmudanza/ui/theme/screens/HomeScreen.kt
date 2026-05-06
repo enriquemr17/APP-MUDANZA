@@ -67,12 +67,12 @@ fun HomeScreen(
                 Text("Gestión de Mudanza")
             }
 
-            // Botones adicionales (Alquiler, Incidencias, Settings)
+            // Botones adicionales (Alquiler, Incidencias)
             Button(
                 onClick = onGoToAlquiler,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Alquiler de vehículos sin conductor")
+                Text("Alquiler de vehículos")
             }
 
             Button(

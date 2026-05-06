@@ -9,7 +9,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.appmudanza.model.listaConductores
 import com.example.appmudanza.ui.theme.screens.AlquilerScreen
 import com.example.appmudanza.ui.theme.screens.DetalleIncidenciaScreen
 import com.example.appmudanza.ui.theme.screens.HomeScreen
@@ -110,6 +109,19 @@ fun AppNavGraph(
                 )
         }
 
+
+
+        composable(Route.Alquiler.path) {
+            AlquilerScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+
+                onConductorClick = { index ->
+                navController.navigate("conductorDetallado/$index") // ✅ así reemplaza el valor
+            }
+            )
+        }
         composable("conductorDetallado/{index}") { backStackEntry ->
             val index = backStackEntry.arguments?.getString("index")?.toInt() ?: 0
             val vehicleViewModel: VehicleViewModel = viewModel()
@@ -123,14 +135,6 @@ fun AppNavGraph(
                 )
             }
 
-        }
-
-        composable(Route.Alquiler.path) {
-            AlquilerScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
         }
         composable(Route.Incidencias.path) {
             IncidenciasScreen(
