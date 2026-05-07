@@ -19,6 +19,10 @@ import com.example.appmudanza.ui.theme.screens.RegisterScreen
 import com.example.appmudanza.ui.theme.screens.VehicleRegistrationScreen
 import com.example.appmudanza.ui.theme.screens.ConductorDetalladoScreen
 import com.example.appmudanza.ui.theme.screens.SettingsScreen
+import com.example.appmudanza.ui.theme.screens.ProfileSettingsScreen
+import com.example.appmudanza.ui.theme.screens.NotificationSettingsScreen
+import com.example.appmudanza.ui.theme.screens.PrivacySettingsScreen
+import com.example.appmudanza.ui.theme.screens.HelpSettingsScreen
 import com.example.appmudanza.viewmodel.VehicleViewModel
 
 
@@ -31,7 +35,12 @@ sealed class Route(val path: String) {
     object VehicleRegistration : Route("vehicle_registration")
     object Alquiler : Route("alquiler")
     object Incidencias : Route("incidencias")
+
     object Settings : Route("settings")
+    object ProfileSettings : Route("profile_settings")
+    object NotificationSettings : Route("notification_settings")
+    object PrivacySettings : Route("privacy_settings")
+    object HelpSettings : Route("help_settings")
 }
 
 @Composable
@@ -145,6 +154,34 @@ fun AppNavGraph(
             )
         }
 
+        composable(Route.Settings.path) {
+            SettingsScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onGoToProfile = {
+                    navController.navigate(Route.ProfileSettings.path)
+                },
+                onGoToNotifications = {
+                    navController.navigate(Route.NotificationSettings.path)
+                },
+                onGoToPrivacy = {
+                    navController.navigate(Route.PrivacySettings.path)
+                },
+                onGoToHelp = {
+                    navController.navigate(Route.HelpSettings.path)
+                }
+            )
+        }
+
+        composable(Route.ProfileSettings.path) {
+            ProfileSettingsScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
         composable("detalle_incidencia/{titulo}") { backStackEntry ->
             val titulo = backStackEntry.arguments?.getString("titulo") ?: "Detalle incidencia"
 
@@ -156,12 +193,29 @@ fun AppNavGraph(
             )
         }
 
-        composable(Route.Settings.path) {
-            SettingsScreen(
+        composable(Route.NotificationSettings.path) {
+            NotificationSettingsScreen(
                 onBack = {
                     navController.popBackStack()
                 }
             )
         }
+
+        composable(Route.PrivacySettings.path) {
+            PrivacySettingsScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(Route.HelpSettings.path) {
+            HelpSettingsScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        }
     }
-}

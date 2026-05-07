@@ -1,6 +1,5 @@
 package com.example.appmudanza.ui.theme.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -12,17 +11,13 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(
-    onBack: () -> Unit,
-    onGoToProfile: () -> Unit,
-    onGoToNotifications: () -> Unit,
-    onGoToPrivacy: () -> Unit,
-    onGoToHelp: () -> Unit
+fun PrivacySettingsScreen(
+    onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Ajustes") },
+                title = { Text("Privacidad y seguridad") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
@@ -31,45 +26,24 @@ fun SettingsScreen(
             )
         }
     ) { paddingValues ->
+
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-
-            SettingItem(
-                titulo = "Perfil",
-                onClick = onGoToProfile
-            )
-
-            SettingItem(
-                titulo = "Notificaciones",
-                onClick = onGoToNotifications
-            )
-
-            SettingItem(
-                titulo = "Privacidad y seguridad",
-                onClick = onGoToPrivacy
-            )
-
-            SettingItem(
-                titulo = "Ayuda",
-                onClick = onGoToHelp
-            )
+            PrivacySettingOption("Cerrar sesión")
+            PrivacySettingOption("Eliminar cuenta")
+            PrivacySettingOption("Información de privacidad")
         }
     }
 }
 
 @Composable
-fun SettingItem(
-    titulo: String,
-    onClick: () -> Unit
-) {
+fun PrivacySettingOption(titulo: String) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
+        modifier = Modifier.fillMaxWidth()
     ) {
         Text(
             text = titulo,
