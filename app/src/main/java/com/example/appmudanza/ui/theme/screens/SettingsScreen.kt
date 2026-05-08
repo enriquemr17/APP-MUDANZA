@@ -1,79 +1,178 @@
 package com.example.appmudanza.ui.theme.screens
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    onBack: () -> Unit,
-    onGoToProfile: () -> Unit,
-    onGoToNotifications: () -> Unit,
-    onGoToPrivacy: () -> Unit,
-    onGoToHelp: () -> Unit
+    onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Ajustes") },
+                title = { Text("Ajustes", color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Outlined.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF1B3A6B))
             )
         }
     ) { paddingValues ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .background(Color(0xFFF8F9FC))
+                .padding(16.dp)
         ) {
+            // Avatar
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .background(Color(0xFFDCE8F5), CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Outlined.Person,
+                            contentDescription = null,
+                            tint = Color(0xFF1B3A6B),
+                            modifier = Modifier.size(40.dp)
+                        )
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        "Mi cuenta",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFF1B3A6B)
+                    )
+                }
+            }
 
-            SettingItem(
-                titulo = "Perfil",
-                onClick = onGoToProfile
+            // Sección general
+            Text(
+                "General",
+                fontSize = 12.sp,
+                color = Color(0xFF6B7A99),
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            SettingItem(
-                titulo = "Notificaciones",
-                onClick = onGoToNotifications
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(0.dp)
+            ) {
+                Column {
+                    SettingsItem(
+                        icon = Icons.Outlined.Notifications,
+                        label = "Notificaciones"
+                    )
+                    Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
+                    SettingsItem(
+                        icon = Icons.Outlined.Language,
+                        label = "Idioma"
+                    )
+                    Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
+                    SettingsItem(
+                        icon = Icons.Outlined.DarkMode,
+                        label = "Tema oscuro"
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            Text(
+                "Cuenta",
+                fontSize = 12.sp,
+                color = Color(0xFF6B7A99),
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            SettingItem(
-                titulo = "Privacidad y seguridad",
-                onClick = onGoToPrivacy
-            )
-
-            SettingItem(
-                titulo = "Ayuda",
-                onClick = onGoToHelp
-            )
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(0.dp)
+            ) {
+                Column {
+                    SettingsItem(
+                        icon = Icons.Outlined.Lock,
+                        label = "Cambiar contraseña"
+                    )
+                    Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
+                    SettingsItem(
+                        icon = Icons.Outlined.Info,
+                        label = "Acerca de MudanzApp"
+                    )
+                    Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
+                    SettingsItem(
+                        icon = Icons.Outlined.Logout,
+                        label = "Cerrar sesión",
+                        textColor = Color(0xFFC62828)
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-fun SettingItem(
-    titulo: String,
-    onClick: () -> Unit
+fun SettingsItem(
+    icon: ImageVector,
+    label: String,
+    textColor: Color = Color(0xFF1B3A6B)
 ) {
-    Card(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        Icon(
+            icon,
+            contentDescription = label,
+            tint = textColor,
+            modifier = Modifier.size(22.dp)
+        )
+        Spacer(Modifier.width(14.dp))
         Text(
-            text = titulo,
-            modifier = Modifier.padding(16.dp)
+            label,
+            fontSize = 14.sp,
+            color = textColor,
+            modifier = Modifier.weight(1f)
+        )
+        Icon(
+            Icons.Outlined.ChevronRight,
+            contentDescription = null,
+            tint = Color(0xFFB0BEC5),
+            modifier = Modifier.size(18.dp)
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.example.appmudanza.navigation
 
+import com.example.appmudanza.ui.theme.screens.HomeScreen
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -151,21 +152,7 @@ fun AppNavGraph(
 
         composable(Route.Settings.path) {
             SettingsScreen(
-                onBack = {
-                    navController.popBackStack()
-                },
-                onGoToProfile = {
-                    navController.navigate(Route.ProfileSettings.path)
-                },
-                onGoToNotifications = {
-                    navController.navigate(Route.NotificationSettings.path)
-                },
-                onGoToPrivacy = {
-                    navController.navigate(Route.PrivacySettings.path)
-                },
-                onGoToHelp = {
-                    navController.navigate(Route.HelpSettings.path)
-                }
+                onBack = { navController.popBackStack() }
             )
         }
 

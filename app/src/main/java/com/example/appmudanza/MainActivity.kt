@@ -5,14 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.appmudanza.data.database.InitialData
 import com.example.appmudanza.navigation.AppNavGraph
-import com.example.appmudanza.ui.theme.APPMUDANZATheme
+import com.example.appmudanza.ui.theme.AppMudanzaTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            APPMUDANZATheme {
+            AppMudanzaTheme {
                 AppNavGraph()
             }
         }
