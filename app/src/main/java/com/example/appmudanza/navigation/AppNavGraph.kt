@@ -147,12 +147,7 @@ fun AppNavGraph(
             IncidenciasScreen(
                 onBack = {
                     navController.popBackStack()
-                },
-                onMudanzaClick = { mudanza ->
-                    navController.navigate("detalle_incidencia/${mudanza.titulo}")
-                }
-            )
-        }
+                })}
 
         composable(Route.Settings.path) {
             SettingsScreen(

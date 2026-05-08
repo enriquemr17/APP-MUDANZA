@@ -22,4 +22,6 @@ interface MudanzaDao {
 
     @Query("UPDATE mudanzas SET fecha = :nuevaFecha WHERE id = :id")
     suspend fun cambiarFecha(id: Int, nuevaFecha: Long)
+    @Query("DELETE FROM mudanzas WHERE id = :id")
+    suspend fun  delete (id: Int)
 }

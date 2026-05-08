@@ -51,4 +51,10 @@ class MudanzaViewModel(application: Application) : AndroidViewModel(application)
             dao.cambiarFecha(id, nuevaFecha)
         }
     }
+
+    fun deleteMudanza (id: Int) {
+        viewModelScope.launch {
+            dao.delete(id)
+        }
+    }
 }
