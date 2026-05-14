@@ -15,11 +15,18 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material.icons.filled.*
+import androidx.compose.foundation.clickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onGoToHome: () -> Unit,
+    onGoToMudanza: () -> Unit,
+    onGoToIncidencias: () -> Unit,
+    onGoToSettings: () -> Unit,
+    onLogout: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -32,6 +39,15 @@ fun SettingsScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF1B3A6B))
             )
+        },
+        bottomBar = {
+            MainBottomBar(
+                selectedRoute = "settings",
+                onGoToHome = onGoToHome,
+                onGoToMudanza = onGoToMudanza,
+                onGoToIncidencias = onGoToIncidencias,
+                onGoToSettings = onGoToSettings
+            )
         }
     ) { paddingValues ->
         Column(
@@ -41,7 +57,6 @@ fun SettingsScreen(
                 .background(Color(0xFFF8F9FC))
                 .padding(16.dp)
         ) {
-            // Avatar
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -62,7 +77,9 @@ fun SettingsScreen(
                             modifier = Modifier.size(40.dp)
                         )
                     }
+
                     Spacer(Modifier.height(12.dp))
+
                     Text(
                         "Mi cuenta",
                         fontSize = 18.sp,
@@ -72,7 +89,6 @@ fun SettingsScreen(
                 }
             }
 
-            // Sección general
             Text(
                 "General",
                 fontSize = 12.sp,
@@ -92,14 +108,18 @@ fun SettingsScreen(
                         icon = Icons.Outlined.Notifications,
                         label = "Notificaciones"
                     )
+
                     Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
+
                     SettingsItem(
-                        icon = Icons.Outlined.Language,
+                        Icons.Outlined.Info,
                         label = "Idioma"
                     )
+
                     Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
+
                     SettingsItem(
-                        icon = Icons.Outlined.DarkMode,
+                        Icons.Outlined.Settings,
                         label = "Tema oscuro"
                     )
                 }
@@ -126,16 +146,21 @@ fun SettingsScreen(
                         icon = Icons.Outlined.Lock,
                         label = "Cambiar contraseña"
                     )
+
                     Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
+
                     SettingsItem(
                         icon = Icons.Outlined.Info,
                         label = "Acerca de MudanzApp"
                     )
+
                     Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
+
                     SettingsItem(
-                        icon = Icons.Outlined.Logout,
+                        icon = Icons.Outlined.ArrowBack,
                         label = "Cerrar sesión",
-                        textColor = Color(0xFFC62828)
+                        textColor = Color(0xFFC62828),
+                        onClick = onLogout
                     )
                 }
             }
@@ -147,11 +172,13 @@ fun SettingsScreen(
 fun SettingsItem(
     icon: ImageVector,
     label: String,
-    textColor: Color = Color(0xFF1B3A6B)
+    textColor: Color = Color(0xFF1B3A6B),
+    onClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClick() }
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -161,15 +188,18 @@ fun SettingsItem(
             tint = textColor,
             modifier = Modifier.size(22.dp)
         )
+
         Spacer(Modifier.width(14.dp))
+
         Text(
             label,
             fontSize = 14.sp,
             color = textColor,
             modifier = Modifier.weight(1f)
         )
+
         Icon(
-            Icons.Outlined.ChevronRight,
+            Icons.Outlined.ArrowForward,
             contentDescription = null,
             tint = Color(0xFFB0BEC5),
             modifier = Modifier.size(18.dp)

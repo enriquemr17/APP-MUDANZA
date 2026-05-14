@@ -25,6 +25,8 @@ import com.example.appmudanza.ui.theme.screens.NotificationSettingsScreen
 import com.example.appmudanza.ui.theme.screens.PrivacySettingsScreen
 import com.example.appmudanza.ui.theme.screens.HelpSettingsScreen
 import com.example.appmudanza.viewmodel.VehicleViewModel
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 
 
 // SEALED CLASS: rutas tipadas
@@ -48,6 +50,8 @@ sealed class Route(val path: String) {
 fun AppNavGraph(
     navController: NavHostController = rememberNavController()
 ) {
+
+    val context = LocalContext.current
 
     NavHost(
         navController = navController,
@@ -113,6 +117,18 @@ fun AppNavGraph(
             MudanzaScreen(
                 onBack = {
                     navController.popBackStack()
+                },
+                onGoToHome = {
+                    navController.navigate(Route.Home.path)
+                },
+                onGoToMudanza = {
+                    navController.navigate(Route.Mudanza.path)
+                },
+                onGoToIncidencias = {
+                    navController.navigate(Route.Incidencias.path)
+                },
+                onGoToSettings = {
+                    navController.navigate(Route.Settings.path)
                 }
             )
         }
@@ -148,11 +164,51 @@ fun AppNavGraph(
             IncidenciasScreen(
                 onBack = {
                     navController.popBackStack()
-                })}
+                },
+                onGoToHome = {
+                    navController.navigate(Route.Home.path)
+                },
+                onGoToMudanza = {
+                    navController.navigate(Route.Mudanza.path)
+                },
+                onGoToIncidencias = {
+                    navController.navigate(Route.Incidencias.path)
+                },
+                onGoToSettings = {
+                    navController.navigate(Route.Settings.path)
+                }
+            )
+        }
 
         composable(Route.Settings.path) {
             SettingsScreen(
-                onBack = { navController.popBackStack() }
+                onBack = {
+                    navController.popBackStack()
+                },
+                onGoToHome = {
+                    navController.navigate(Route.Home.path)
+                },
+                onGoToMudanza = {
+                    navController.navigate(Route.Mudanza.path)
+                },
+                onGoToIncidencias = {
+                    navController.navigate(Route.Incidencias.path)
+                },
+                onGoToSettings = {
+                    navController.navigate(Route.Settings.path)
+                },
+                onLogout = {
+
+                    Toast.makeText(
+                        context,
+                        "Has cerrado sesión correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    navController.navigate(Route.Login.path) {
+                        popUpTo(0)
+                    }
+                }
             )
         }
 

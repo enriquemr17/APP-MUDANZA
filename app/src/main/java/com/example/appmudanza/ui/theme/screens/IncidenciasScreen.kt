@@ -26,6 +26,10 @@ import java.util.*
 @Composable
 fun IncidenciasScreen(
     onBack: () -> Unit,
+    onGoToHome: () -> Unit,
+    onGoToMudanza: () -> Unit,
+    onGoToIncidencias: () -> Unit,
+    onGoToSettings: () -> Unit,
     mudanzaViewModel: MudanzaViewModel = viewModel(),
     incidenciaViewModel: IncidenciaViewModel = viewModel()
 ) {
@@ -36,17 +40,37 @@ fun IncidenciasScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
+
         topBar = {
             TopAppBar(
                 title = { Text("Incidencias", color = Color.White) },
+
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Outlined.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                        Icon(
+                            Icons.Outlined.ArrowBack,
+                            contentDescription = "Volver",
+                            tint = Color.White
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF1B3A6B))
+
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF1B3A6B)
+                )
+            )
+        },
+
+        bottomBar = {
+            MainBottomBar(
+                selectedRoute = "incidencias",
+                onGoToHome = onGoToHome,
+                onGoToMudanza = onGoToMudanza,
+                onGoToIncidencias = onGoToIncidencias,
+                onGoToSettings = onGoToSettings
             )
         }
+
     ) { paddingValues ->
         Box(
             modifier = Modifier

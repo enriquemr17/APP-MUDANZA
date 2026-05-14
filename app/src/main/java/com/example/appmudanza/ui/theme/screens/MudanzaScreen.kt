@@ -21,6 +21,10 @@ import com.example.appmudanza.viewmodel.MudanzaViewModel
 @Composable
 fun MudanzaScreen(
     onBack: () -> Unit,
+    onGoToHome: () -> Unit,
+    onGoToMudanza: () -> Unit,
+    onGoToIncidencias: () -> Unit,
+    onGoToSettings: () -> Unit,
     mudanzaViewModel: MudanzaViewModel = viewModel()
 ) {
     val mudanzas by mudanzaViewModel.mudanzas.collectAsState()
@@ -33,10 +37,25 @@ fun MudanzaScreen(
                 title = { Text("Gestión de Mudanzas", color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Outlined.ArrowBack, contentDescription = "Volver", tint = Color.White)
+                        Icon(
+                            Icons.Outlined.ArrowBack,
+                            contentDescription = "Volver",
+                            tint = Color.White
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF1B3A6B))
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF1B3A6B)
+                )
+            )
+        },
+        bottomBar = {
+            MainBottomBar(
+                selectedRoute = "mudanza",
+                onGoToHome = onGoToHome,
+                onGoToMudanza = onGoToMudanza,
+                onGoToIncidencias = onGoToIncidencias,
+                onGoToSettings = onGoToSettings
             )
         }
     ) { paddingValues ->
