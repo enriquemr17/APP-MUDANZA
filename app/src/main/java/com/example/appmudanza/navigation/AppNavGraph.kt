@@ -142,8 +142,8 @@ fun AppNavGraph(
                 },
 
                 onConductorClick = { index ->
-                navController.navigate("conductorDetallado/$index") // ✅ así reemplaza el valor
-            },
+                    navController.navigate("conductorDetallado/$index") // ✅ así reemplaza el valor
+                },
                 onVehicleClick = { index ->
                     navController.navigate("vehiculosDetallado/$index")
                 }
@@ -272,5 +272,5 @@ fun AppNavGraph(
             )
         }
 
-        }
     }
+}

@@ -89,42 +89,6 @@ fun SettingsScreen(
                 }
             }
 
-            Text(
-                "General",
-                fontSize = 12.sp,
-                color = Color(0xFF6B7A99),
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(0.dp)
-            ) {
-                Column {
-                    SettingsItem(
-                        icon = Icons.Outlined.Notifications,
-                        label = "Notificaciones"
-                    )
-
-                    Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
-
-                    SettingsItem(
-                        Icons.Outlined.Info,
-                        label = "Idioma"
-                    )
-
-                    Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
-
-                    SettingsItem(
-                        Icons.Outlined.Settings,
-                        label = "Tema oscuro"
-                    )
-                }
-            }
-
             Spacer(Modifier.height(16.dp))
 
             Text(
@@ -135,26 +99,6 @@ fun SettingsScreen(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(0.dp)
-            ) {
-                Column {
-                    SettingsItem(
-                        icon = Icons.Outlined.Lock,
-                        label = "Cambiar contraseña"
-                    )
-
-                    Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
-
-                    SettingsItem(
-                        icon = Icons.Outlined.Info,
-                        label = "Acerca de MudanzApp"
-                    )
-
-                    Divider(color = Color(0xFFE2E6ED), modifier = Modifier.padding(horizontal = 16.dp))
 
                     SettingsItem(
                         icon = Icons.Outlined.ArrowBack,
@@ -165,8 +109,7 @@ fun SettingsScreen(
                 }
             }
         }
-    }
-}
+
 
 @Composable
 fun SettingsItem(
