@@ -86,7 +86,7 @@ fun HomeScreen(
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(Color(0xFF1B3A6B), Color(0xFF2D5FA8))
+                        colors = listOf(Color(0xFFFAFAFA), Color(0xFF2D5FA8))
                     )
                 )
         ) {
@@ -105,19 +105,19 @@ fun HomeScreen(
                             "MudanzApp",
                             fontSize = 26.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = Color.Black
                         )
                         Text(
                             "¿Qué necesitas hoy?",
                             fontSize = 14.sp,
-                            color = Color.White.copy(alpha = 0.7f)
+                            color = Color.Black.copy(alpha = 0.7f)
                         )
                     }
                     IconButton(
                         onClick = onGoToSettings,
                         modifier = Modifier
                             .size(42.dp)
-                            .background(Color.White.copy(alpha = 0.15f), CircleShape)
+                            .background(Color.Black.copy(alpha = 0.15f), CircleShape)
                     ) {
                         Icon(Icons.Outlined.ManageAccounts, contentDescription = "Ajustes", tint = Color.White)
                     }
@@ -136,7 +136,7 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         HomeCard(
-                            label = "Conductores",
+                            label = "Alquiler",
                             icon = Icons.Outlined.AccountCircle,
                             onClick = onGoToAlquiler,
                             modifier = Modifier.weight(1f).fillMaxHeight()
@@ -184,7 +184,7 @@ fun HomeCard(
         onClick = onClick,
         modifier = modifier,
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.12f)),
+        colors = CardDefaults.cardColors(containerColor = Color.Gray.copy(alpha = 0.2f)),
         elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Column(

@@ -94,6 +94,7 @@ fun AlquilerScreen(
     onBack: () -> Unit,
     vehicleViewModel: VehicleViewModel = viewModel(),
     onConductorClick: (Int) -> Unit,
+    onVehicleClick: (Int) -> Unit,
 ) {
     val vehicles by vehicleViewModel.vehicles.collectAsState()
     var filterCapacity by remember { mutableStateOf("") }
@@ -208,11 +209,13 @@ fun AlquilerScreen(
                                 )
                             }
                         }
-                        items(filteredVehicles) { vehicle ->
+                        itemsIndexed(filteredVehicles) { index, vehicle ->
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 6.dp),
+                                    .padding(horizontal = 16.dp, vertical = 6.dp)
+                                    .clickable {onVehicleClick(index)},
+
                                 shape = RoundedCornerShape(16.dp),
                                 colors = CardDefaults.cardColors(containerColor = Color.White),
                                 border = BorderStroke(0.5.dp, Color(0xFFE2E6ED)),

@@ -65,7 +65,7 @@ fun MainBottomBar(
             onClick = onGoToMudanza,
             icon = {
                 Icon(
-                    imageVector = Icons.Outlined.Home,
+                    imageVector = Icons.Outlined.MoveToInbox,
                     contentDescription = "Mudanzas"
                 )
 
@@ -90,7 +90,7 @@ fun MainBottomBar(
             onClick = onGoToIncidencias,
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Settings,
+                    imageVector = Icons.Outlined.ReportProblem,
                     contentDescription = "Ajustes"
                 )
             },
@@ -114,7 +114,7 @@ fun MainBottomBar(
             onClick = onGoToSettings,
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Settings,
+                    imageVector = Icons.Outlined.ManageAccounts,
                     contentDescription = "Ajustes"
                 )
             },

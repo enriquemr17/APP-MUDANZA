@@ -1,18 +1,17 @@
 package com.example.appmudanza.navigation
 
-import com.example.appmudanza.ui.theme.screens.HomeScreen
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import com.example.appmudanza.ui.theme.screens.vehiculosDetalladoScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
+import com.example.appmudanza.ui.theme.screens.HomeScreen
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appmudanza.ui.theme.screens.AlquilerScreen
 import com.example.appmudanza.ui.theme.screens.DetalleIncidenciaScreen
-import com.example.appmudanza.ui.theme.screens.HomeScreen
 import com.example.appmudanza.ui.theme.screens.IncidenciasScreen
 import com.example.appmudanza.ui.theme.screens.LoginScreen
 import com.example.appmudanza.ui.theme.screens.MudanzaScreen
@@ -44,6 +43,7 @@ sealed class Route(val path: String) {
     object NotificationSettings : Route("notification_settings")
     object PrivacySettings : Route("privacy_settings")
     object HelpSettings : Route("help_settings")
+    object vehiculosDetallado : Route("vehiculosDetallado/{index}")
 }
 
 @Composable
@@ -143,8 +143,25 @@ fun AppNavGraph(
 
                 onConductorClick = { index ->
                 navController.navigate("conductorDetallado/$index") // ✅ así reemplaza el valor
-            }
+            },
+                onVehicleClick = { index ->
+                    navController.navigate("vehiculosDetallado/$index")
+                }
             )
+        }
+
+        composable("vehiculosDetallado/{index}") { backStackEntry ->
+            val index = backStackEntry.arguments?.getString("index")?.toInt() ?: 0
+            val vehicleViewModel: VehicleViewModel = viewModel()
+            val vehicles by vehicleViewModel.vehicles.collectAsState()
+            val sinConductor = vehicles.filter { !it.withDriver }
+
+            if (sinConductor.isNotEmpty() && index < sinConductor.size) {
+                vehiculosDetalladoScreen(
+                    vehicle = sinConductor[index],
+                    onBack = { navController.popBackStack() }
+                )
+            }
         }
         composable("conductorDetallado/{index}") { backStackEntry ->
             val index = backStackEntry.arguments?.getString("index")?.toInt() ?: 0
